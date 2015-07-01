@@ -3,14 +3,76 @@
 
 <head>
   <script src="../../webcomponentsjs/webcomponents.js"></script>
-  <link rel='import' href='../web-arduino.html'></link>
-  <link rel='import' href='../wa-buzzer.html'></link>
+  <link rel='import' href='../web-arduino.html'>
+  <link rel='import' href='../wa-buzzer.html'>
+  <style>
+    img{
+      width:100%;
+      margin-top:-40px;
+      pointer-events: none;
+    }
+    button{
+      font-size:50px;
+    }
+  </style>
 </head>
 
 <body>
-  <web-arduino id='board' device='wahaha'>
-    <wa-buzzer id='buzzer' pin='11' notes='E5,E5,REST,E5,REST,C5,E5,REST,G5' tempos='8,8,8,8,8,8,8,8,8' autoplay></wa-buzzer>
+  <web-arduino id='board' device='35N1'>
+    <wa-buzzer id='buzzer' pin='11' notes='E7,E7,0,E7,0,C7,E7,0,G7,0,0,0,G6,0,0,0,C7,0,0,G6,0,0,E6,0,0,A6,0,B6,0,AS6,A6,0,G6,E7,0,G7,A7,0,F7,G7,0,E7,0,C7,D7,B6,0,0,C7,0,0,G6,0,0,E6,0,0,A6,0,B6,0,AS6,A6,0,G6,E7,0,G7,A7,0,F7,G7,0,E7,0,C7,D7,B6,0,0' tempos='' ></wa-buzzer>
+    <!--<wa-buzzer id='buzzer' pin='11' notes='c4,d4,e4,f4,g4,a4,b4,c5,c4,d4,e4,f4,g4,a4,b4,c5,0,0' tempos='2,5,4,8,1,5,6,4,4,7,4,1,7,5,0' ></wa-buzzer>-->
   </web-arduino>
+
+  <button id="play">play</button>
+  <button id="stop">stop</button>
+  <button id="pause">pause</button>
+  <button id="resume">resume</button>
+
+  <img src="http://vignette3.wikia.nocookie.net/fantendo/images/f/f6/MarioHand.png/revision/latest?cb=20110731140119">
+  <br/>
+  <br/>
+  音符：
+  <br/>
+  c4,d4,e4,f4,g4,a4,b4,c5
+
+  <br/>
+  <br/>
+  真善美：
+  <br/> c4,e4,e4,0,e4,g4,g4,0,d4,f4,f4,0,a4,b4,b4,0,c4,d4,e4,c4,e4,c4,e4,0,d4,e4,f4,f4,e4,d4,f4,0,e4,f4,g4,e4,g4,e4,g4,0,f4,g4,a4,a4,g4,f4,a4,0,g4,c4,d4,e4,f4,g4,a4,0,a4,d4,e4,f4,g4,a4,b4,0,b4,e4,f4,g4,a4,b4,c5,0,c5,b4,a4,f4,b4,g4,c5
+
+  <br/>
+  <br/>
+  馬力歐：
+  <br/>  E7,E7,0,E7,0,C7,E7,0,G7,0,0,0,G6,0,0,0,C7,0,0,G6,0,0,E6,0,0,A6,0,B6,0,AS6,A6,0,G6,E7,0,G7,A7,0,F7,G7,0,E7,0,C7,D7,B6,0,0,C7,0,0,G6,0,0,E6,0,0,A6,0,B6,0,AS6,A6,0,G6,E7,0,G7,A7,0,F7,G7,0,E7,0,C7,D7,B6,0,0
+
+  <script>
+    window.addEventListener('WebComponentsReady', function () {
+      var board = document.getElementById('board');
+
+      board.on('ready',function ready() {
+        var  buzzer = document.getElementById('buzzer');
+
+
+        play.addEventListener('click', function(){
+          buzzer.play();
+        });
+
+        document.getElementById("stop").addEventListener('click', function(){
+          buzzer.stop();
+        });
+
+        document.getElementById("pause").addEventListener('click', function(){
+          buzzer.pause();
+        });
+
+        document.getElementById("resume").addEventListener('click', function(){
+          buzzer.resume();
+        });
+      });
+
+    }, false);
+  </script>
+
 </body>
 
 </html>

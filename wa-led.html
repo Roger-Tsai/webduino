@@ -79,6 +79,14 @@
       this.led.toggle(callback);
     };
 
+    proto.blink = function(ms) {
+      this.led.blink(ms);
+    };
+
+    proto.stopBlink = function() {
+      this.led.stopBlink();
+    };
+
     proto.attributeChangedCallback = function(attrName, oldVal, newVal) {
       if (this.led) {
         switch (attrName) {
