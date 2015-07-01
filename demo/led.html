@@ -111,7 +111,7 @@
     function run() {
       onBtn.addEventListener('click', function(e) {
         led.on();
-        ledstatus.innerHTML = "led on!";
+        ledstatus.innerHTML = "led on!" + "    led state:" + led.state;
         e.stopPropagation();
         e.preventDefault();
         return false;
@@ -119,7 +119,7 @@
 
       offBtn.addEventListener('click', function(e) {
         led.off();
-        ledstatus.innerHTML = "led off!";
+        ledstatus.innerHTML = "led off!" + "    led state:" + led.state;
         e.stopPropagation();
         e.preventDefault();
         return false;
@@ -127,7 +127,7 @@
 
       toggleBtn.addEventListener('click', function(e) {
         led.toggle();
-        ledstatus.innerHTML = "led toggle!";
+        ledstatus.innerHTML = "led toggle!" + "    led state:" + led.state;
         e.stopPropagation();
         e.preventDefault();
         return false;
@@ -135,7 +135,7 @@
 
       blinkBtn.addEventListener('click', function(e) {
         led.blink(blinkTimer.value);
-        ledstatus.innerHTML = "led blink!";
+        ledstatus.innerHTML = "led blink!" + "    led state:" + led.state;
         e.stopPropagation();
         e.preventDefault();
         return false;
@@ -143,7 +143,7 @@
 
       stopBlinkBtn.addEventListener('click', function(e) {
         led.stopBlink();
-        ledstatus.innerHTML = "led stopped!";
+        ledstatus.innerHTML = "led stopped!" + "    led state:" + led.state;
         e.stopPropagation();
         e.preventDefault();
         return false;

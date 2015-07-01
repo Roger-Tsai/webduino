@@ -7,6 +7,10 @@
 <body>
   <script>
   (function() {
+    var status = {
+      0: 'off',
+      1: 'on'
+    };
     var proto = Object.create(HTMLElement.prototype, {
       pin: {
         get: function() {
@@ -34,7 +38,8 @@
       },
       state: {
         get: function() {
-          return this.getAttribute('state');
+          return status[this.led._pin.value];
+          //return status[this.getAttribute('state')];
         },
         set: function(val) {
           this.setAttribute('state', val);
@@ -69,10 +74,12 @@
 
     proto.on = function(callback) {
       this.led.on(callback);
+      this.state = 'on';
     };
 
     proto.off = function(callback) {
       this.led.off(callback);
+      this.state = 'off';
     };
 
     proto.toggle = function(callback) {
