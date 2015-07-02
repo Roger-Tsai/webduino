@@ -6,23 +6,60 @@
   <link rel='import' href='../web-arduino.html'>
   <link rel='import' href='../wa-buzzer.html'>
   <style>
-    img{
-      width:100%;
-      margin-top:-40px;
-      pointer-events: none;
+    * {
+      font-size: 20px;
     }
-    button{
-      font-size:50px;
+
+    #msg.default::after {
+      content: "訊息";
+    }
+
+    #msg.waiting::after {
+      content: "Loading...";
+    }
+
+    #msg.ready::after {
+      content: "Ready!";
+    }
+
+    #msg.setting::after {
+      content: "設定中...";
+    }
+
+    #msg.set::after {
+      content: "設定完成";
+    }
+
+    .btns {
+      padding: 5px;
+      font-size: 16px;
+      width: 85px;
+      color: #00AEFF;
+    }
+
+    .container {
+      background-color: #f7f7f7;
+      padding: 0 10px 20px 10px;
+      border: 1px dotted #CCC;
+      width: 270px;
+      margin-top: 20px;
     }
   </style>
 </head>
 
 <body>
-  <web-arduino id='board' device='35N1'>
+  <web-arduino id='board' device='board'>
     <wa-buzzer id='buzzer' pin='11' notes='E7,E7,0,E7,0,C7,E7,0,G7,0,0,0,G6,0,0,0,C7,0,0,G6,0,0,E6,0,0,A6,0,B6,0,AS6,A6,0,G6,E7,0,G7,A7,0,F7,G7,0,E7,0,C7,D7,B6,0,0,C7,0,0,G6,0,0,E6,0,0,A6,0,B6,0,AS6,A6,0,G6,E7,0,G7,A7,0,F7,G7,0,E7,0,C7,D7,B6,0,0' tempos='' ></wa-buzzer>
-    <!--<wa-buzzer id='buzzer' pin='11' notes='c4,d4,e4,f4,g4,a4,b4,c5,c4,d4,e4,f4,g4,a4,b4,c5,0,0' tempos='2,5,4,8,1,5,6,4,4,7,4,1,7,5,0' ></wa-buzzer>-->
   </web-arduino>
 
+  <div id="msg" class="waiting"></div>
+  <form>
+    <label>device : </label>
+    <input type="text" id="device">
+    <button class="setting" id="set">設定</button>
+  </form>
+
+  <button id="oplay">origin play</button>
   <button id="play">play</button>
   <button id="stop">stop</button>
   <button id="pause">pause</button>
@@ -47,28 +84,56 @@
 
   <script>
     window.addEventListener('WebComponentsReady', function () {
-      var board = document.getElementById('board');
+      var board = document.getElementById('board'),
+          device = document.getElementById('device'),
+          msg = document.getElementById('msg'),
+          setBtn = document.getElementById('set'),
+          oplay = document.getElementById('oplay'),
+          play = document.getElementById('play'),
+          stop = document.getElementById('stop'),
+          pause = document.getElementById('pause'),
+          resume = document.getElementById('resume');
 
-      board.on('ready',function ready() {
+      setBtn.addEventListener('click', function(e) {
+        msg.className = "setting";
+        board.device = device.value;
+        localStorage.device = device.value;
+        board.on('ready', ready);
+        board.init();
+        e.stopPropagation();
+        e.preventDefault();
+        return false;
+      }, false);
+
+      function ready() {
+        // 示意 board ready
+        msg.className = "set";
+        run();
+      }
+
+      function run() {
         var  buzzer = document.getElementById('buzzer');
 
+        oplay.addEventListener('click', function(){
+          buzzer.oplay();
+        });
 
         play.addEventListener('click', function(){
           buzzer.play();
         });
 
-        document.getElementById("stop").addEventListener('click', function(){
+        stop.addEventListener('click', function(){
           buzzer.stop();
         });
 
-        document.getElementById("pause").addEventListener('click', function(){
+        pause.addEventListener('click', function(){
           buzzer.pause();
         });
 
-        document.getElementById("resume").addEventListener('click', function(){
+        resume.addEventListener('click', function(){
           buzzer.resume();
         });
-      });
+      }
 
     }, false);
   </script>
