@@ -59,7 +59,6 @@
     <button class="setting" id="set">設定</button>
   </form>
 
-  <button id="oplay">origin play</button>
   <button id="play">play</button>
   <button id="stop">stop</button>
   <button id="pause">pause</button>
@@ -88,7 +87,6 @@
           device = document.getElementById('device'),
           msg = document.getElementById('msg'),
           setBtn = document.getElementById('set'),
-          oplay = document.getElementById('oplay'),
           play = document.getElementById('play'),
           stop = document.getElementById('stop'),
           pause = document.getElementById('pause'),
@@ -113,10 +111,6 @@
 
       function run() {
         var  buzzer = document.getElementById('buzzer');
-
-        oplay.addEventListener('click', function(){
-          buzzer.oplay();
-        });
 
         play.addEventListener('click', function(){
           buzzer.play();
