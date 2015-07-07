@@ -55,6 +55,11 @@
         set: function(val) {
           this.setAttribute('autoplay', val);
         }
+      },
+      state: {
+        get: function() {
+          return this.buzzer.state();
+        }
       }
     });
 

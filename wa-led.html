@@ -7,10 +7,6 @@
 <body>
   <script>
   (function() {
-    var status = {
-      0: 'off',
-      1: 'on'
-    };
     var proto = Object.create(HTMLElement.prototype, {
       pin: {
         get: function() {
@@ -38,7 +34,7 @@
       },
       state: {
         get: function() {
-          return status[this.led._pin.value];
+          return this.led.state();
           //return status[this.getAttribute('state')];
         },
         set: function(val) {
