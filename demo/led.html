@@ -134,7 +134,7 @@
       }, false);
 
       blinkBtn.addEventListener('click', function(e) {
-        led.blink(blinkTimer.value);
+        led.blink(blinkTimer.value, null);
         ledstatus.innerHTML = "led blink!" + "    led state:" + led.state;
         e.stopPropagation();
         e.preventDefault();

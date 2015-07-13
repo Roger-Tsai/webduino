@@ -34,8 +34,7 @@
       },
       state: {
         get: function() {
-          return this.led.state();
-          //return status[this.getAttribute('state')];
+          return this.led.getState();
         },
         set: function(val) {
           this.setAttribute('state', val);
@@ -70,20 +69,18 @@
 
     proto.on = function(callback) {
       this.led.on(callback);
-      this.state = 'on';
     };
 
     proto.off = function(callback) {
       this.led.off(callback);
-      this.state = 'off';
     };
 
     proto.toggle = function(callback) {
       this.led.toggle(callback);
     };
 
-    proto.blink = function(ms) {
-      this.led.blink(ms);
+    proto.blink = function(ms, callback) {
+      this.led.blink(ms, callback);
     };
 
     proto.stopBlink = function() {
