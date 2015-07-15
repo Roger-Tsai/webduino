@@ -39,6 +39,14 @@
         set: function(val) {
           this.setAttribute('state', val);
         }
+      },
+      interval: {
+        get: function() {
+          return this.led.getInterval();
+        },
+        set: function(val) {
+          this.setAttribute('interval', val);
+        }
       }
     });
 
@@ -79,8 +87,13 @@
       this.led.toggle(callback);
     };
 
-    proto.blink = function(ms, callback) {
-      this.led.blink(ms, callback);
+    proto.blink = function(callback) {
+      if (typeof callback === 'function') {
+        this.led.blink(this.interval, callback);
+      } else {
+        this.led.setInterval(callback);
+        this.led.blink(this.interval, null);
+      }
     };
 
     proto.stopBlink = function() {
@@ -91,13 +104,23 @@
       if (this.led) {
         switch (attrName) {
           case 'state':
-            newVal === "on" ? this.on() : this.off();
+            if (newVal === "on") {
+              this.on();
+            } else if (newVal === "off") {
+              this.off();
+            } else if (newVal === "blink") {
+              this.blink();
+            }
             break;
           case 'gnd':
             this.createGnd_();
             break;
           case 'intensity':
             this.led.intensity = newVal;
+            break;
+          case 'interval':
+            this.led.setInterval(newVal);
+            this.blink(this.interval);
             break;
         }
       }
