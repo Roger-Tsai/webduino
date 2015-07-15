@@ -56,7 +56,7 @@
 
       this.led = new Led(board, board.getDigitalPin(this.pin));
 
-      if (this.state === 'on') {
+      if (this.state === this.led.LED_STATE.on) {
         this.on();
       }
     };
@@ -87,13 +87,17 @@
       this.led.toggle(callback);
     };
 
-    proto.blink = function(callback) {
+    proto.blink = function(ms, callback) {
+      var intMS = parseInt(ms);
+      intMS = (isNaN(intMS) || intMS <= 0) ? 1000 : intMS;
+      this.led.setInterval(intMS);
+
       if (typeof callback === 'function') {
         this.led.blink(this.interval, callback);
-      } else {
-        this.led.setInterval(callback);
-        this.led.blink(this.interval, null);
+        return;
       }
+
+      this.led.blink(this.interval);
     };
 
     proto.stopBlink = function() {
@@ -104,11 +108,11 @@
       if (this.led) {
         switch (attrName) {
           case 'state':
-            if (newVal === "on") {
+            if (newVal === this.led.LED_STATE.on) {
               this.on();
-            } else if (newVal === "off") {
+            } else if (newVal === this.led.LED_STATE.off) {
               this.off();
-            } else if (newVal === "blink") {
+            } else if (newVal === this.led.LED_STATE.blink) {
               this.blink();
             }
             break;
@@ -119,8 +123,7 @@
             this.led.intensity = newVal;
             break;
           case 'interval':
-            this.led.setInterval(newVal);
-            this.blink(this.interval);
+            this.blink(newVal);
             break;
         }
       }
